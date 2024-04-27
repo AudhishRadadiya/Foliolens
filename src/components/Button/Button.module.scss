@@ -1,0 +1,29 @@
+@use "../../Assets/styles/mixin.scss" as mixin;
+
+.btn {
+    background: mixin.$bg-blue;
+    color: mixin.$text-white;
+    font-size: 16px;
+    font-weight: 700;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px;
+
+    img {
+        position: relative;
+        top: -1px;
+        width: 18px;
+        margin-right: 10px;
+    }
+
+    &:hover {
+        background: mixin.$bg-skyblue;
+        color: mixin.$text-white;
+        text-decoration: none;
+    }
+
+    &.btn-green {
+        background: mixin.$bg-blue;
+        color: mixin.$text-white;
+    }
+}

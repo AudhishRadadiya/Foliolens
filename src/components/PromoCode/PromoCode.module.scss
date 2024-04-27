@@ -1,0 +1,16 @@
+@use "../../Assets/styles/mixin.scss" as mixin;
+
+.promo_code {
+  position: relative;
+
+  svg {
+    width: 10px;
+    margin: 0 10px;
+  }
+}
+
+.promo_code_wrapper {
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0px 12px 24px rgba(6, 18, 43, 0.06);
+}

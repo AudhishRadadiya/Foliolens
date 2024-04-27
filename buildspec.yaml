@@ -1,0 +1,49 @@
+version: 0.2
+
+env:
+  variables:
+    branch_name: "development"
+  parameter-store:
+    SSH_KEY: foliolens-repo-sync-pub
+    P_KEY: foliolens-repo-sync-priv
+phases:
+  install:
+    commands:
+      - apt-get install git -y
+      - git init
+      - git status
+      - git checkout -b ${branch_name} 
+      - git config --global user.email "jawad"
+      - git config --global user.name "jawad" 
+      - git add .
+      - git commit -m "Code Sync from Dev account to Prod account"
+      - echo "${SSH_KEY}" > ~/.ssh/CodeCommitDemo-ssh.pub
+      - echo "${P_KEY}" > ~/.ssh/CodeCommitDemo-ssh
+      - chown 700 ~/.ssh/CodeCommitDemo-ssh
+      - chown 700 ~/.ssh/CodeCommitDemo-ssh.pub
+      - echo "Host git-codecommit.*.amazonaws.com" > ~/.ssh/config
+      - echo "User APKA2KL3DPWQJRB3A3WS" >> ~/.ssh/config
+      - echo "IdentityFile ~/.ssh/CodeCommitDemo-ssh" >> ~/.ssh/config
+      - echo "Host git-codecommit.us-east-1.amazonaws.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+      - chmod 600 ~/.ssh/config
+      - eval "$(ssh-agent -s)" && ssh-add ~/.ssh/CodeCommitDemo-ssh
+      - git remote add destination ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/Foliolens-WebPortal-Prod
+      - git push --set-upstream destination ${branch_name} -f
+      
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      -  npm install --legacy-peer-deps
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
+  post_build:
+    commands:
+      # copy the contents of /build to portal-devnew.foliolens.com
+      - aws s3 cp --recursive --acl public-read ./build s3://foliolens-dev-webportal/
+      - aws cloudfront create-invalidation --distribution-id E3AOS3R67ESZ0O --paths "/*"
+artifacts:
+  files:
+    - "**/*"
+  base-directory: build

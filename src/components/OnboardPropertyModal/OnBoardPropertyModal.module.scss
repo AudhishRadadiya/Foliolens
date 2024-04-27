@@ -1,0 +1,54 @@
+@use "../../Assets/styles/mixin.scss" as mixin;
+
+.headerCloseBtn {
+  padding: 18px 24px 0;
+}
+
+.centered_text {
+  text-align: center;
+}
+.top_text {
+  width: 350px;
+  height: 64px;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #06122b;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin-bottom: 0px !important;
+}
+.middle_txt {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 0px !important;
+}
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  width: 216px;
+  height: 144px;
+  background: #ffffff;
+  box-shadow: 0px 8px 16px rgba(6, 18, 43, 0.08);
+  border-radius: 16px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+}
+.btn:hover {
+  background-color: #f0f8ff;
+}
